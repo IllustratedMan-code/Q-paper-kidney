@@ -1,0 +1,3 @@
+name,shortname,signature_p,signature_diff,path
+TCGA_KIRC_RNASeqV2_2019,"All Samples",NA,NA,full.gct
+TCGA_KIRC_RNASeqV2_2019_diff=-3.75_3.01_p=1e10-primary-solid-tumor-vs-solid-tissue-normal,"Tissue Type Signature",1e10,-3.75:3.01,signature1.gct
