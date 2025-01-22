@@ -205,7 +205,7 @@
         }
 
       }
-      v(40pt, weak: true)
+      v(20pt, weak: true)
     }
   }
   doc

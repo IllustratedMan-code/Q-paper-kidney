@@ -23,17 +23,17 @@ _Comprehensive Molecular Characterization of Clear Cell Renal Cell Carcinoma_;@c
 
 == A note about "Consensus Clustering"
 
-The clustering algorithm in the original paper uses a method of dimensionality reduction called nonnegative matrix factorization (NMF). The data is decomposed into a smaller matrix that is representative of the larger dataset. This is similar to PCA in practice; however, as part of NMF, one can determine the relative contribution of any column in the original matrix to the columns in the smaller matrix. This facilitates assignment of a sample (original matrix) to a cluster (column in small matrix). "Consensus clustering" typically refers to the process of aggregating clustering output for multiple clustering algorithms; however, in the original paper it refers to the average clustering over successive NMF runs. It should be noted that both NMF and k-means are similar in outputs and inputs. Both need to be given an ideal number of clusters and both are linear methods, they cannot determine non-linear relationships within the data. However, NMF clustering is much more computationally intensive, so evaluating it was not feasible for this paper.
-
+In the original paper, it is stated that "consensus clustering" is used to calculate clusters for mRNA-seq data.
+Consensus clustering typically refers to the comparison of multiple different clustering algorithms; thus it is the "consensus" of multiple clustering algorithms.
+The original paper does not perform typical consensus clustering. Instead the average, or consensus, of multiple runs of nonnegative matrix factorization based (NMF) clustering is used to compute the final clusters. Both NMF and k-means clustering are linear separation techniques and are subject to similar limitations.
 
 = Evaluating K-means clustering (Results + Methods)
-Initial classification of molecular subtypes is typically done via unsupervised clustering.
-Many algorithms exist to do this, each with their pros and cons. One commonly used algorithms is
-called _k-means_. This algorithm is very common due to its ease of use and straight forward interpretation.
+Initial classification of molecular subtypes is typically done via unsupervised clustering. Here we evaluate k-means, a commonly used algorithm.
 
 However, k-means clustering is only useful if one can determine the ideal number of clusters. Because k-means is an efficient algorithm, and the dataset is relatively small, it is possible to evaluate multiple numbers of clusters within a short amount of time while still forming a representative range of useful clusters.
 For clustering methods that have user defined numbers of clusters, there are two methods that are commonly used to find the ideal number of clusters.
 Since the number of clusters corresponds to the number of subtypes, picking the right number of clusters is essential.
+
 
 Generally, the ideal number of k-means clusters was consistent at 2. However, when the significantly differential data for the tumor and non-tumor conditions were evaluated (this is the signature defined in the group paper), the number of clusters was inconsistent and changed with random state.
 
@@ -53,7 +53,7 @@ The elbow method is useful, but not the end all be all metric for determining th
     image("figures/Tissue-Type-Signature_primary-solid-tumor_elbow.png"),
   ),
   caption: [
-    Elbow method for determining ideal number of clusters. The ideal number of clusters is shown in red. Top row of plots contains both the normal tissue and tumor samples. Bottom row of plots only contains tumor samples. Y axis is the inertia value, low values of inertia correspond to better clustering; however, low numbers of clusters are generally better.
+    Elbow method for determining ideal number of clusters. The ideal number of clusters is shown in red. Top row of plots contains both the normal tissue and tumor samples. Bottom row of plots only contains tumor samples. Y axis is the inertia value, low values of inertia correspond to better clustering; however, low numbers of clusters are generally better. Bottom right plot corresponds to the clustering done for the group paper.
   ],
   kind: image,
 ) <elbow>
@@ -72,6 +72,8 @@ Another method for determining the ideal number of clusters using k-clustering m
 Performing silhouette analysis on the hard to interpret plot from @elbow also shows difficulty in selecting the correct number of clusters for the data. The silhouette scores are very similar for 3, 4, and 5 clusters, and the ideal clustering is similarly not stable based on random state.
 
 = Discussion
-Given the unreliability of k-means clustering for this data, it may be a reasonable assumption that the data is not linearly separable, or does not conform to the assumptions of k-means. If the data does have non-linear associations, then the clustering in the paper would also not be valid. Non-linear clustering methods should be evaluated for this data, and typical consensus clustering should be performed to provide a more balanced picture of the putative subtypes present in the data.
+Given the unreliability of k-means clustering for this data, it may be a reasonable assumption that the data is not linearly separable, or does not conform to the assumptions of k-means. If the data does have non-linear associations, then the clustering in the original paper would also not be valid. Non-linear clustering methods should be evaluated for this data, and typical consensus clustering should be performed to provide a more balanced picture of the putative subtypes present in the data.
+
+Additionally, the method used to select relevant genes is different between the group and original paper. The group paper selects genes based on differential expression between tumor and non-tumor groups. In contrast, the original paper selects genes based on variability between samples. It is possible that clustering differences may be resolved by using this method.
 
 #bibliography("citations.bib", style: "american-medical-association")
